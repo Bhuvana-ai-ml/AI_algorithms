@@ -1,107 +1,88 @@
-def is_safe(board, row, col, N): 
+def print_sol(): 
 
-   # Check for queens in the same row (left side) 
+   for i in range(n): 
+
+       for j in range(n): 
+
+           print(a[i][j], end=" ") 
+
+       print() 
+
+   print() 
+
+ 
+
+def is_safe(row, col): 
+
+   # checking for the same row 
 
    for i in range(col): 
 
-       if board[i] == row: 
-
-           return False 
-
-     
-
-   # Check upper diagonal (left side) 
-
-   for i, j in zip(range(col - 1, -1, -1), range(row - 1, -1, -1)): 
-
-       if board[i] == j: 
+       if a[row][i]: 
 
            return False 
 
  
 
-   # Check lower diagonal (left side) 
+   # checking for the same column 
 
-   for i, j in zip(range(col - 1, -1, -1), range(row + 1, N)): 
+   for i in range(row): 
 
-       if board[i] == j: 
+       if a[i][col]: 
 
            return False 
 
-     
+ 
+
+   # checking for the left diagonal 
+
+   for i, j in zip(range(row - 1, -1, -1), range(col - 1, -1, -1)): 
+
+       if a[i][j]: 
+
+           return False 
+
+ 
+
+   # checking for the right diagonal 
+
+   for i, j in zip(range(row - 1, -1, -1), range(col + 1, n)): 
+
+       if a[i][j]: 
+
+           return False 
+
+ 
 
    return True 
 
  
 
-def solve_n_queens(board, col, N): 
+def nqueen(row): 
 
-   if col >= N: 
+   if row == n: 
 
-       return True # All queens are placed 
-
- 
-
-   for row in range(N): 
-
-       if is_safe(board, row, col, N): 
-
-           board[col] = row # Place queen 
-
-           if solve_n_queens(board, col + 1, N): 
-
-               return True # Proceed to the next column 
-
-           board[col] = -1 # Backtrack 
-
- 
-
-   return False # No valid position found 
-
- 
-
-def print_solution(board, N): 
-
-   for row in range(N): 
-
-       line = "" 
-
-       for col in range(N): 
-
-           if board[col] == row: 
-
-               line += "Q " 
-
-           else: 
-
-               line += ". " 
-
-       print(line) 
-
-   print("\n") 
-
- 
-
-# Driver function 
-
-def n_queens(N): 
-
-   board = [-1] * N # Initialize board 
-
-   if solve_n_queens(board, 0, N): 
-
-       print_solution(board, N) 
+       print_sol() 
 
    else: 
 
-       print("No solution exists for N =", N) 
+       for i in range(n): 
+
+           if is_safe(row, i): 
+
+               a[row][i] = 1 
+
+               nqueen(row + 1) 
+
+               a[row][i] = 0 
 
  
 
-# Example: Solve for 8 queens 
+#main program 
 
-N = 8 
+n = int(input("Enter the value of N :: ")) 
 
-n_queens(N) 
+a = [[0] * 10 for _ in range(10)] 
 
+nqueen(0) 
  
