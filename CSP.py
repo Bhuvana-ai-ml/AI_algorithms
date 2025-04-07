@@ -103,3 +103,5 @@ def n_queens(N):
 N = 8 
 
 n_queens(N) 
+
+ 
